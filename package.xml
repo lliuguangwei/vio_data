@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>pose_graph_only_lidar</name>
+  <name>pose_graph_ndt</name>
   <version>0.0.0</version>
-  <description>The pose_graph_only_lidar package</description>
+  <description>The pose_graph_ndt package</description>
 
   <maintainer email="guangwei.liu@tusimple.ai">pyo</maintainer>
 

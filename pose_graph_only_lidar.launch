@@ -1,7 +1,0 @@
-<!-- -->
-<launch>
-
-  <!-- rosrun ndt_odometry  -->
-  <node pkg="pose_graph_only_lidar" type="pose_graph_only_lidar" name="pose_graph_only_lidar" output="screen"/>
-  
-</launch>

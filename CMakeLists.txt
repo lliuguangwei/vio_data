@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(pose_graph_only_lidar)
+project(pose_graph_ndt)
 
 # set(CMAKE_CXX_STANDARD 11)
 add_definitions(-std=c++11 -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2)
 set(CMAKE_CXX_FLAGS "-std=c++11 -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake")
-
 set(CMAKE_BUILD_TYPE "RELEASE")
 
 find_package(PCL REQUIRED)
@@ -21,6 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   novatel_msgs
+  ts_dataset_server
   pcl_ros
   pcl_conversions
   velodyne_pointcloud
@@ -31,6 +31,12 @@ find_package(catkin REQUIRED COMPONENTS
   ndt_gpu
 )
 
+find_package(CUDA)
+if (CUDA_FOUND)
+    add_definitions(-DCUDA_FOUND)
+    list(APPEND ndt_gpu)
+endif ()
+
 catkin_package(
   CATKIN_DEPENDS std_msgs velodyne_pointcloud  ${PCL_OPENMP_PACKAGES}
         DEPENDS PCL
@@ -38,6 +44,9 @@ catkin_package(
 
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  ${PROJECT_SOURCE_DIR}/include
+  ${PROJECT_SOURCE_DIR}/include/json
+  ${CUDA_INCLUDE_DIRS}
 )
 
 find_package(OpenCV 3.0 QUIET)
@@ -51,6 +60,13 @@ endif()
 # find_package(Eigen3 3.1.0 REQUIRED)
 find_package(Eigen3 REQUIRED)
 
-add_executable(pose_graph_only_lidar pose_graph_only_lidar.cpp)
-target_link_libraries(pose_graph_only_lidar ${catkin_LIBRARIES})
-add_dependencies(pose_graph_only_lidar ${catkin_EXPORTED_TARGETS})
+add_library(libjson src/jsoncpp.cpp include/json/json.h)
+
+add_executable(ndt_odometry src/ndt_odometry.cpp
+src/ground_plane_filter.cpp)
+target_link_libraries(ndt_odometry 
+${CUDA_LIBS}
+${catkin_LIBRARIES}
+libjson
+)
+add_dependencies(ndt_odometry ${catkin_EXPORTED_TARGETS})

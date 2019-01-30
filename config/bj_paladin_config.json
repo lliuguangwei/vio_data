@@ -1,0 +1,28 @@
+{
+	"OUTPUT_PATH": "/home/lgw/Documents/project/ndt_mapping/no_gps/to_xvke/vertex_edge.g2o",
+	"INPUT_PATH": "/mnt/truenas/bj-scratch/map/dat/Shanghai/",
+	"BAG_NAME": "2018-11-28-12-32-43",
+	"VEHICLE_NAME": "Paladin",
+	"LIDAR_GPSIMU_CALIBRATION_PATH": "/home/lgw/calibration/beijing.txt",
+	"BEGIN_TIME": 1543380735,
+	"END_TIME": 1543380769,
+	"START_SPEED": 20,
+
+	"LIDAR_SETTINGS": {
+		"TOPIC_NAME": "/velodyne_packets",
+		"LIDAR_TYPE": "Velodyne",
+		"MIN_RANGE": 2.0,
+		"MAX_RANGE": 50.0,
+		"LIDAR_HEIGHT": -1.6
+	},
+
+	"SAVE_UNDISTORTION_RESULT": {
+		"SAVE_POINTCLOUD": true,
+		"OUTPUT_PCD_PATH": "/media/lgw/1E25997C69162698/pcd_to_xvke/undistortion/"
+	},
+
+	"SAVE_SUBMAP" :{
+		"SAVE_SUBMAP": true,
+		"SUBMAP_PATH": "/media/lgw/1E25997C69162698/pcd_to_xvke/"
+	}
+}
